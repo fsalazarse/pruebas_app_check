@@ -1,10 +1,12 @@
 <script setup>
+
   import {onMounted, ref} from 'vue'
   import listCardView from './components/cards/listCardView.vue'
   import { initializeApp } from "firebase/app";
   import {getFirestore, collection, query, getDocs, onSnapshot} from 'firebase/firestore'
   import {initializeAppCheck, ReCaptchaEnterpriseProvider} from 'firebase/app-check';
 
+  const ID_TOKEN = import.meta.env.ID_TOKEN
 
   const cards = ref([]);
 
@@ -22,7 +24,7 @@
   onMounted(async () => {
     self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
     initializeAppCheck(app, {
-      provider: new ReCaptchaEnterpriseProvider('6LfKCa4pAAAAAMFS8odz7m2PowDQVQ8Y1YQr8EKW'),
+      provider: new ReCaptchaEnterpriseProvider(ID_TOKEN),
       //isTokenAutoRefreshEnabled: true // Set 
     })
     const q = query(collection(db, "cards"));
